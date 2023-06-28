@@ -8,12 +8,23 @@ import { Component } from '@angular/core';
 })
 export class EventosComponent {
   public eventos: any = [] ;
+  widthImg: number =200;
+  marginImg: number = 2;
+  showImg: boolean = true;
+  filtrolista: string = '';
+
+
+
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getEventos();
 
+  }
+
+  alterarImagem() {
+    this.showImg = !this.showImg;
   }
 
   public getEventos(): void {
