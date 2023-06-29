@@ -3,16 +3,18 @@
 
 <div class="form-inline">
   <div class="form-group nb-2">
+    <label class="mr-2">
+    Filtro:
+    </label>
     <input
     type="text"
     class="form-control mr-2"
     placeholder="buscar"
     [(ngModel)]="filtrolista"
     >
-    <button class="btn btn-outline-success">Buscar</button>
+    <p></p>
   </div>
 </div>
-<h3>Filtro : {{filtrolista}}</h3>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -25,10 +27,11 @@
       <th>Qtd Pessoas</th>
       <th>Lote</th>
       <th>Opções</th>
+      <th></th>
     </tr>
   </thead>
   <tbody *ngIf="eventos && eventos.length">
-    <tr *ngFor="let evento of eventos">
+    <tr *ngFor="let evento of eventosFiltrados">
       <td>
         <img *ngIf="showImg"
         src="/assets/{{evento.imagemURL}}"
@@ -43,6 +46,10 @@
       <td>{{evento.qtdPessoas}}</td>
       <td>{{evento.lote}}</td>
       <td>{{evento.opcoes}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm mr-2">Excluir</button>
+      </td>
     </tr>
   </tbody>
   <tfoot *ngif="!eventos.length">

@@ -8,8 +8,9 @@ import { Component } from '@angular/core';
 })
 export class EventosComponent {
   public eventos: any = [] ;
-  widthImg: number =200;
-  marginImg: number = 2;
+  public eventosFiltrados: any = [];
+  widthImg: number =30;
+  marginImg: number = 3;
   showImg: boolean = true;
   private _filtrolista: string = '';
 
@@ -20,13 +21,16 @@ export class EventosComponent {
 
   public set filtrolista(value: string){
     this._filtrolista =value;
-    this.eventos = this.filtrolista ? this.filtrarEventos(this.filtrolista) : this.eventos ;
+    this.eventosFiltrados = this.filtrolista ? this.filtrarEventos(this.filtrolista) : this.eventos ;
   }
 
   filtrarEventos (filtrarPor : string) : any {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.eventos.filter(
-      (      evento: { tema: string; }) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor)!== -1
+      (evento: {
+        local: any; tema: string; dataEvento: any; eventoId: any;
+      }) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor)!== -1 ||
+          evento.local.toLocaleLowerCase().indexOf(filtrarPor)!== -1
     )
   }
 
@@ -46,8 +50,11 @@ export class EventosComponent {
 
   public getEventos(): void {
     this.http.get('https://localhost:5001/api/eventos').subscribe(
-     response =>this.eventos = response,
-     error => console.log(error)
+     response =>{
+      this.eventos = response;
+      this.eventosFiltrados = this.eventos ;
+     },
+      error => console.log(error)
    )
 
     }
